@@ -222,7 +222,7 @@
           if (touchX < canvas.width / 2 && canvas.height >100 && canvas.height< 300) {
             leftPressed = true;
             rightPressed = false; // Aseguramos que solo una dirección esté activa
-          } else if (touchX > canvas.width / 2 && canvas.height <100 && canvas.height> 300) {
+          } else if (touchX < canvas.width / 2 && canvas.height >100 && canvas.height< 300) {
             leftPressed = false; // Aseguramos que solo una dirección esté activa
             rightPressed = true;
           }
