@@ -37,7 +37,12 @@
         alt="logo_mario"
       />
       <canvas></canvas>
-      <img hidden id="sprite_doble" src="./sprite_doble.png" alt="sprite Doble Mario" />
+      <img
+        hidden
+        id="sprite_doble"
+        src="./sprite_doble.png"
+        alt="sprite Doble Mario"
+      />
       <img hidden id="arrowKeys" src="./arrowKeys.png" alt="arrowKeys" />
       <!-- <img id="controller" src="./controler.jpg" alt="controller" width="452px"/> -->
     </div>
@@ -95,19 +100,20 @@
 
       function drawMario() {
         ctx.beginPath();
-        const marioImages = marioDirection === "right" ? marioImagesRight : marioImagesLeft;
+        const marioImages =
+          marioDirection === "right" ? marioImagesRight : marioImagesLeft;
         const { x, y } = marioImages[currentFrame];
         ctx.drawImage(
-          $sprite_doble,  //imagen
-          x,              //coordenada x donde empieza a recortar
-          y,              //coordenada y donde empieza a recortar
-          16,             //tamaño del recorte a lo ancho
-          32,             //tamaño del recorte a lo alto
-          marioX,         //posicion de la imagen en el canvas en X
-          marioY,         //posicion de la imagen en el canvas en Y
-          16,             //ancho del dibujo en el canvas
-          32              //alto del dibujo en el canvas
-          );
+          $sprite_doble, //imagen
+          x, //coordenada x donde empieza a recortar
+          y, //coordenada y donde empieza a recortar
+          16, //tamaño del recorte a lo ancho
+          32, //tamaño del recorte a lo alto
+          marioX, //posicion de la imagen en el canvas en X
+          marioY, //posicion de la imagen en el canvas en Y
+          16, //ancho del dibujo en el canvas
+          32 //alto del dibujo en el canvas
+        );
         ctx.closePath();
       }
 
@@ -198,16 +204,7 @@
       }
 
       function drawArrowKeys() {
-        ctx.drawImage(
-          $arrowKeys, 
-          15, 
-          4, 
-          310, 
-          216, 
-          1, 
-          103, 
-          298, 
-          45);
+        ctx.drawImage($arrowKeys, 15, 4, 310, 216, 1, 103, 298, 45);
       }
 
       function cleanCanvas() {
@@ -256,49 +253,49 @@
             downPressed = false;
           }
         }
+        function touchStartHandler(event) {
+        const touchX = event.touches[0].clientX;
+        const touchY = event.touches[0].clientY;
+        const bottomThird = (2 / 3) * canvas.height;
+
+        if (touchY > bottomThird) {
+          if (touchX < canvas.width / 2) {
+            leftArrowPressed = true;
+          } else {
+            rightArrowPressed = true;
+          }
+        } else {
+          upArrowPressed = true;
+        }
       }
 
-      function touchStartHandler(event) {
-    const touchX = event.touches[0].clientX;
-    const touchY = event.touches[0].clientY;
-    const bottomThird = (2 / 3) * canvas.height;
-    
-    if (touchY > bottomThird) {
-        if (touchX < canvas.width / 2) {
-            leftArrowPressed = true;
-        } else {
-            rightArrowPressed = true;
-        }
-    } else {
-        upArrowPressed = true;
-    }
-}
+      function touchMoveHandler(event) {
+        event.preventDefault(); // Prevenir desplazamiento en dispositivos táctiles
+        const touchX = event.touches[0].clientX;
+        const touchY = event.touches[0].clientY;
+        const bottomThird = (2 / 3) * canvas.height;
 
-function touchMoveHandler(event) {
-    event.preventDefault(); // Prevenir desplazamiento en dispositivos táctiles
-    const touchX = event.touches[0].clientX;
-    const touchY = event.touches[0].clientY;
-    const bottomThird = (2 / 3) * canvas.height;
-
-    if (touchY > bottomThird) {
-        if (touchX < canvas.width / 2) {
+        if (touchY > bottomThird) {
+          if (touchX < canvas.width / 2) {
             leftArrowPressed = true;
             rightArrowPressed = false; // Aseguramos que solo una dirección esté activa
-        } else if (touchX > canvas.width / 2) {
+          } else if (touchX > canvas.width / 2) {
             leftArrowPressed = false; // Aseguramos que solo una dirección esté activa
             rightArrowPressed = true;
+          }
+        } else {
+          upArrowPressed = true;
         }
-    } else {
-        upArrowPressed = true;
-    }
-}
+      }
 
-function touchEndHandler(event) {
-    upArrowPressed = false;
-    leftArrowPressed = false;
-    rightArrowPressed = false;
-}
+      function touchEndHandler(event) {
+        upArrowPressed = false;
+        leftArrowPressed = false;
+        rightArrowPressed = false;
+      }
+      }
 
+      
 
       function draw() {
         /* console.log({leftPressed, rightPressed, upPressed, downPressed}); */
