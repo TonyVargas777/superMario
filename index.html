@@ -165,10 +165,10 @@
           4, 
           310, 
           216, 
-          0, 
-          100, 
-          300, 
-          50);
+          1, 
+          103, 
+          298, 
+          45);
       }
 
       function cleanCanvas() {
@@ -220,30 +220,54 @@
       }
 
       function touchStartHandler(event) {
-          const touchX = event.touches[0].clientX;
-          if (touchX < canvas.width / 2) {
-            leftPressed = true;
-          } else {
-            rightPressed = true;
-          }
+    const touchX = event.touches[0].clientX;
+    const touchY = event.touches[0].clientY;
+    
+    if (touchY < canvas.height / 2) {
+        upArrowPressed = true;
+    } else {
+        if (touchX < canvas.width / 3) {
+            leftArrowPressed = true;
+        } else if (touchX < (canvas.width / 3) * 2) {
+            downArrowPressed = true;
+        } else {
+            rightArrowPressed = true;
         }
+    }
+}
 
-        function touchMoveHandler(event) {
-          event.preventDefault(); // Prevent scrolling on touch devices
-          const touchX = event.touches[0].clientX;
-          if (touchX < canvas.width / 2) {
-            leftPressed = true;
-            rightPressed = false; // Aseguramos que solo una dirección esté activa
-          } else if (touchX > canvas.width / 2) {
-            leftPressed = false; // Aseguramos que solo una dirección esté activa
-            rightPressed = true;
-          }
-        }
+function touchMoveHandler(event) {
+    event.preventDefault(); // Prevenir desplazamiento en dispositivos táctiles
+    const touchX = event.touches[0].clientX;
+    const touchY = event.touches[0].clientY;
 
-        function touchEndHandler(event) {
-          leftPressed = false;
-          rightPressed = false;
+    if (touchY < canvas.height / 2) {
+        upArrowPressed = true;
+    } else {
+        upArrowPressed = false;
+        if (touchX < canvas.width / 3) {
+            leftArrowPressed = true;
+            downArrowPressed = false;
+            rightArrowPressed = false;
+        } else if (touchX < (canvas.width / 3) * 2) {
+            leftArrowPressed = false;
+            downArrowPressed = true;
+            rightArrowPressed = false;
+        } else {
+            leftArrowPressed = false;
+            downArrowPressed = false;
+            rightArrowPressed = true;
         }
+    }
+}
+
+function touchEndHandler(event) {
+    upArrowPressed = false;
+    leftArrowPressed = false;
+    downArrowPressed = false;
+    rightArrowPressed = false;
+}
+
       
 
 
