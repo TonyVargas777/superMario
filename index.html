@@ -256,22 +256,52 @@
 
         function touchStartHandler(event) {
           const touchX = event.touches[0].clientX;
-          if (touchX < canvas.width / 2) {
+          if (touchX < canvas.width / 3 && canvas.height / 3 < touchX) {
             leftPressed = true;
-          } else {
+          } else if (
+            touchX < (canvas.width / 3) &&
+            ((canvas.height / 3 < touchX) * 3)
+          ) {
             rightPressed = true;
+          } else if (touchX < canvas.width / 3 && canvas.width / 2 - 50) {
+            upPressed = true;
+          } else if (
+            touchX < (canvas.width / 2) &&
+            ((canvas.height / 3 < touchX) * 2)
+          ) {
+            downPressed = true;
           }
         }
 
         function touchMoveHandler(event) {
           event.preventDefault(); // Prevent scrolling on touch devices
           const touchX = event.touches[0].clientX;
-          if (touchX < canvas.width / 2) {
+          if (touchX < canvas.width / 3 && canvas.height / 3 < touchX) {
             leftPressed = true;
-            rightPressed = false; // Aseguramos que solo una dirección esté activa
-          } else if (touchX > canvas.width / 2) {
+            rightPressed = false;
+            upPressed = false;
+            downPressed = false; // Aseguramos que solo una dirección esté activa
+          } else if  (
+            touchX < (canvas.width / 3) &&
+            ((canvas.height / 3 < touchX) * 3)
+          ) {
             leftPressed = false; // Aseguramos que solo una dirección esté activa
             rightPressed = true;
+            upPressed = false;
+            downPressed = false;
+          } else if (touchX < canvas.width / 3 && canvas.width / 2 - 50) {
+            leftPressed = false; // Aseguramos que solo una dirección esté activa
+            rightPressed = false;
+            upPressed = true;
+            downPressed = false;
+          } else if (
+            touchX < (canvas.width / 2) &&
+            ((canvas.height / 3 < touchX) * 2)
+          ) {
+            leftPressed = false; // Aseguramos que solo una dirección esté activa
+            rightPressed = false;
+            upPressed = false;
+            downPressed = true;
           }
         }
 
