@@ -254,7 +254,7 @@
           }
         }
 
-        /* function touchStartHandler(event) {
+        function touchStartHandler(event) {
           const touchX = event.touches[0].clientX;
           if (touchX < canvas.width / 3 && canvas.height / 3 < touchX) {
             leftPressed = true;
@@ -310,61 +310,7 @@
           rightPressed = false;
           upPressed = false;
           downPressed = false;
-        } */
-
-        function touchStartHandler(event) {
-    const touchX = event.touches[0].clientX;
-    const touchY = event.touches[0].clientY;
-    
-    // Calculate the center of the canvas
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-
-    // Calculate the angle of the touch relative to the center of the canvas
-    const angle = Math.atan2(touchY - centerY, touchX - centerX);
-    
-    // Determine the direction based on the angle
-    if (angle >= -Math.PI / 4 && angle < Math.PI / 4) {
-        rightPressed = true;
-    } else if (angle >= Math.PI / 4 && angle < 3 * Math.PI / 4) {
-        upPressed = true;
-    } else if (angle >= 3 * Math.PI / 4 || angle < -3 * Math.PI / 4) {
-        leftPressed = true;
-    } else if (angle >= -3 * Math.PI / 4 && angle < -Math.PI / 4) {
-        downPressed = true;
-    }
-}
-
-function touchMoveHandler(event) {
-    event.preventDefault(); // Prevent scrolling on touch devices
-    const touchX = event.touches[0].clientX;
-    const touchY = event.touches[0].clientY;
-
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-
-    const angle = Math.atan2(touchY - centerY, touchX - centerX);
-    
-    // Reset all directions
-    leftPressed = false;
-    rightPressed = false;
-    upPressed = false;
-    downPressed = false;
-
-    // Determine the direction based on the angle
-    if (angle >= -Math.PI / 4 && angle < Math.PI / 4) {
-        rightPressed = true;
-    } else if (angle >= Math.PI / 4 && angle < 3 * Math.PI / 4) {
-        upPressed = true;
-    } else if (angle >= 3 * Math.PI / 4 || angle < -3 * Math.PI / 4) {
-        leftPressed = true;
-    } else if (angle >= -3 * Math.PI / 4 && angle < -Math.PI / 4) {
-        downPressed = true;
-    }
-}
-
-
-
+        }
       }
 
       function draw() {
