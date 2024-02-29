@@ -227,6 +227,7 @@
         canvas.addEventListener("touchend", touchEndHandler);
 
         function keyDownHandler(event) {
+          event.preventDefault();
           const { key } = event;
           if (key === "ArrowRight") {
             rightPressed = true;
@@ -329,14 +330,17 @@
 
             if (canvasY > bottomY - touchAreaHeight) {
               // Bottom area touched
-              if (canvasX < middleX / 2) {
+              if (canvasX < middleX - middleX / 3) {
                 // Left area
                 leftPressed = true;
-              } else if (canvasX > middleX + middleX / 2) {
+              } else if (canvasX > middleX + middleX / 3) {
                 // Right area
                 rightPressed = true;
-              } else {
-                // Middle bottom area, could be used for 'down' but we'll use it for 'up' here
+              } else if (canvasX > middleX - middleX / 3 && (canvasX < middleX + middleX / 3) && canvasY > bottomY - touchAreaHeight/2) {
+                // Middle area down
+                downPressed = true;
+              } else if (canvasX > middleX - middleX / 3 && (canvasX < middleX + middleX / 3) && canvasY > bottomY - touchAreaHeight) {
+                // Middle area down
                 upPressed = true;
               }
             }
