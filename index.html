@@ -11,7 +11,7 @@
       }
       canvas {
         width: 448px;
-        height: 400px;
+        height: 600px;
         border: 4px solid blue;        
         background-image: url(./fondo_vacio.png);
         background-size: 448px 400px;
@@ -38,7 +38,8 @@
       />
       <canvas></canvas>
       <img hidden id="sprite_doble" src="./sprite_doble.png" alt="sprite Doble Mario" />
-      <img id="sprite_doble" src="./controler.jpg" alt="sprite Doble Mario" width="452px"/>
+      <img  id="arrowKeys" src="./arrowKeys.png" alt="arrowKeys" />
+      <!-- <img id="controller" src="./controler.jpg" alt="controller" width="452px"/> -->
     </div>
 
 
@@ -46,6 +47,7 @@
       const canvas = document.querySelector("canvas");
       const ctx = canvas.getContext("2d");
       const $sprite_doble = document.getElementById("sprite_doble");
+      const $arrowKeys = document.getElementById("arrowKeys");
 
                   // =================== //
                   // VARIABLES DEL JUEGO //
@@ -57,7 +59,7 @@
 
       //Posición inicial Mario
       let marioX = (canvas.width - marioWidth) / 2;
-      let marioY = canvas.height - marioHeight - 38;
+      let marioY = canvas.height - marioHeight -75;
 
       //Cursores
       let rightPressed = false;
@@ -127,8 +129,7 @@
         } else if (leftPressed && marioX > 0) {
           marioDirection = "left";
           marioX -= 1;
-        }
-        //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        }        
         if (upPressed && marioDirection === "right") {
           // Salto de Mario a la derecha
           marioDirection = "right";
@@ -155,7 +156,20 @@
           const { x, y } = marioImageCrouchLeft;
           ctx.drawImage($sprite_doble, x, y, marioWidth, marioHeight, marioX, marioY + 3, marioWidth, marioHeight - 3);
         }
-      }             
+      } 
+      
+      function drawArrowKeys() {
+        ctx.drawImage(
+          $arrowKeys, 
+          15, 
+          4, 
+          310, 
+          216, 
+          0, 
+          100, 
+          300, 
+          50);
+      }
 
       function cleanCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -234,11 +248,12 @@
 
 
       function draw() {
-        console.log({leftPressed, rightPressed, upPressed, downPressed});
+        /* console.log({leftPressed, rightPressed, upPressed, downPressed}); */
         cleanCanvas();
         drawMario();
         marioMovement();
         updateMarioFrame();
+        drawArrowKeys();
         window.requestAnimationFrame(draw);
       }
       draw();
