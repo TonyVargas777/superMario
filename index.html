@@ -253,32 +253,32 @@
             downPressed = false;
           }
         }
-      }
 
-      function touchStartHandler(event) {
-        const touchX = event.touches[0].clientX;
-        if (touchX < canvas.width / 2) {
-          leftPressed = true;
-        } else {
-          rightPressed = true;
+        function touchStartHandler(event) {
+          const touchX = event.touches[0].clientX;
+          if (touchX < canvas.width / 2) {
+            leftPressed = true;
+          } else {
+            rightPressed = true;
+          }
         }
-      }
 
-      function touchMoveHandler(event) {
-        event.preventDefault(); // Prevent scrolling on touch devices
-        const touchX = event.touches[0].clientX;
-        if (touchX < canvas.width / 2) {
-          leftPressed = true;
-          rightPressed = false; // Aseguramos que solo una dirección esté activa
-        } else if (touchX > canvas.width / 2) {
-          leftPressed = false; // Aseguramos que solo una dirección esté activa
-          rightPressed = true;
+        function touchMoveHandler(event) {
+          event.preventDefault(); // Prevent scrolling on touch devices
+          const touchX = event.touches[0].clientX;
+          if (touchX < canvas.width / 2) {
+            leftPressed = true;
+            rightPressed = false; // Aseguramos que solo una dirección esté activa
+          } else if (touchX > canvas.width / 2) {
+            leftPressed = false; // Aseguramos que solo una dirección esté activa
+            rightPressed = true;
+          }
         }
-      }
 
-      function touchEndHandler(event) {
-        leftPressed = false;
-        rightPressed = false;
+        function touchEndHandler(event) {
+          leftPressed = false;
+          rightPressed = false;
+        }
       }
 
       function draw() {
