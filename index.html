@@ -170,6 +170,9 @@
       function initEvents() {
         document.addEventListener("keydown", keyDownHandler);
         document.addEventListener("keyup", keyUpHandler);
+        canvas.addEventListener("touchstart", touchStartHandler);
+        canvas.addEventListener("touchmove", touchMoveHandler);
+        canvas.addEventListener("touchend", touchEndHandler);
 
         function keyDownHandler(event) {
           const { key } = event;
@@ -203,6 +206,34 @@
           }
         }
       }
+
+      function touchStartHandler(event) {
+          const touchX = event.touches[0].clientX;
+          if (touchX < canvas.width / 2 && canvas.height <100 && canvas.height> 300) {
+            leftPressed = true;
+          } else {
+            rightPressed = true;
+          }
+        }
+
+        function touchMoveHandler(event) {
+          event.preventDefault(); // Prevent scrolling on touch devices
+          const touchX = event.touches[0].clientX;
+          if (touchX < canvas.width / 2 && canvas.height <100 && canvas.height> 300) {
+            leftPressed = true;
+            rightPressed = false; // Aseguramos que solo una dirección esté activa
+          } else if (touchX > canvas.width / 2 && canvas.height <100 && canvas.height> 300) {
+            leftPressed = false; // Aseguramos que solo una dirección esté activa
+            rightPressed = true;
+          }
+        }
+
+        function touchEndHandler(event) {
+          leftPressed = false;
+          rightPressed = false;
+        }
+      
+
 
       function draw() {
         console.log({leftPressed, rightPressed, upPressed, downPressed});
