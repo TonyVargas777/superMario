@@ -26,8 +26,8 @@
         flex-direction: column;
         align-items: center;
       }
-      img{
-        border: 2px solid white
+      img {
+        border: 2px solid white;
       }
     </style>
   </head>
@@ -47,7 +47,11 @@
         alt="sprite Doble Mario"
       />
       <img hidden id="arrowKeys" src="./arrowKeys.png" alt="arrowKeys" />
-      <img id="www-TonyVargasDev-com" src="./www-TonyVargasDev-com.png" alt="www-TonyVargasDev-com" />
+      <img
+        id="www-TonyVargasDev-com"
+        src="./www-TonyVargasDev-com.png"
+        alt="www-TonyVargasDev-com"
+      />
       <!-- <img id="controller" src="./controler.jpg" alt="controller" width="452px"/> -->
     </div>
 
@@ -259,53 +263,6 @@
           }
         }
 
-        /* function touchStartHandler(event) {
-          const touchX = event.touches[0].clientX;
-          if (touchX < canvas.width / 3) {
-            leftPressed = true;
-          } else if ((touchX > canvas.width / 3) * 2) {
-            rightPressed = true;
-          } else if (touchX > canvas.width / 3 && ((touchX < canvas.width / 3) * 2) && touchX < canvas.height - 50) {
-            upPressed = true;
-          } else if (touchX > canvas.width / 3 && ((touchX < canvas.width / 3) * 2) && touchX > canvas.height - 50) {
-            downPressed = true;
-          }
-        }
-
-        function touchMoveHandler(event) {
-          event.preventDefault(); // Prevent scrolling on touch devices
-          const touchX = event.touches[0].clientX;
-          if (touchX < canvas.width / 3) {
-            leftPressed = true;
-            rightPressed = false;
-            upPressed = false;
-            downPressed = false; // Aseguramos que solo una dirección esté activa
-          } else if ((touchX > canvas.width / 3) * 2) {
-            leftPressed = false; // Aseguramos que solo una dirección esté activa
-            rightPressed = true;
-            upPressed = false;
-            downPressed = false;
-          } else if (touchX > canvas.width / 3 && ((touchX < canvas.width / 3) * 2) && touchX < canvas.height - 50) {
-            leftPressed = false; // Aseguramos que solo una dirección esté activa
-            rightPressed = false;
-            upPressed = true;
-            downPressed = false;
-          } else if (touchX > canvas.width / 3 && ((touchX < canvas.width / 3) * 2) && touchX > canvas.height - 50) {
-            leftPressed = false; // Aseguramos que solo una dirección esté activa
-            rightPressed = false;
-            upPressed = false;
-            downPressed = true;
-          }
-        }
-
-        function touchEndHandler(event) {
-          leftPressed = false;
-          rightPressed = false;
-          upPressed = false;
-          downPressed = false;
-        } */
-
-        
         function touchStartHandler(event) {
           // Prevent scrolling on touch devices.
           event.preventDefault();
@@ -336,10 +293,18 @@
               } else if (canvasX > middleX + middleX / 3) {
                 // Right area
                 rightPressed = true;
-              } else if (canvasX > middleX - middleX / 3 && (canvasX < middleX + middleX / 3) && canvasY > bottomY - touchAreaHeight/2) {
+              } else if (
+                canvasX > middleX - middleX / 3 &&
+                canvasX < middleX + middleX / 3 &&
+                canvasY > bottomY - touchAreaHeight / 2
+              ) {
                 // Middle area down
                 downPressed = true;
-              } else if (canvasX > middleX - middleX / 3 && (canvasX < middleX + middleX / 3) && canvasY > bottomY - touchAreaHeight) {
+              } else if (
+                canvasX > middleX - middleX / 3 &&
+                canvasX < middleX + middleX / 3 &&
+                canvasY > bottomY - touchAreaHeight
+              ) {
                 // Middle area down
                 upPressed = true;
               }
@@ -348,7 +313,52 @@
         }
 
         function touchMoveHandler(event) {
-          // This could be similar to touchStartHandler or you can omit this if you want static control
+          event.preventDefault(); // Prevent scrolling on touch devices
+          const touchX = event.touches[0].clientX;
+          const touchY = touches[0].clientY;
+
+          // Convert touch coordinates to be relative to the canvas
+          const rect = canvas.getBoundingClientRect();
+          const scaleX = canvas.width / rect.width; // Relationship bitmap vs. element for X
+          const scaleY = canvas.height / rect.height; // Relationship bitmap vs. element for Y
+
+          const canvasX = (touchX - rect.left) * scaleX;
+          const canvasY = (touchY - rect.top) * scaleY;
+
+          // Define touch areas (you might need to adjust these based on your UI)
+          const middleX = canvas.width / 2;
+          const bottomY = canvas.height;
+          const touchAreaHeight = 50; // Height of the touch area for up/down at the bottom of the canvas
+
+          if (canvasX < middleX - middleX / 3) {
+            leftPressed = true;
+            rightPressed = false;
+            upPressed = false;
+            downPressed = false; // Aseguramos que solo una dirección esté activa
+          } else if (canvasX > middleX + middleX / 3) {
+            leftPressed = false; // Aseguramos que solo una dirección esté activa
+            rightPressed = true;
+            upPressed = false;
+            downPressed = false;
+          } else if (
+            canvasX > middleX - middleX / 3 &&
+            canvasX < middleX + middleX / 3 &&
+            canvasY > bottomY - touchAreaHeight
+          ) {
+            leftPressed = false; // Aseguramos que solo una dirección esté activa
+            rightPressed = false;
+            upPressed = true;
+            downPressed = false;
+          } else if (
+            canvasX > middleX - middleX / 3 &&
+            canvasX < middleX + middleX / 3 &&
+            canvasY > bottomY - touchAreaHeight / 2
+          ) {
+            leftPressed = false; // Aseguramos que solo una dirección esté activa
+            rightPressed = false;
+            upPressed = false;
+            downPressed = true;
+          }
         }
 
         function touchEndHandler(event) {
